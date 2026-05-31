@@ -9,6 +9,16 @@ The package ships Anime4K GLSL shader resources inline and compiles the Metal
 host kernels through a SwiftPM build plugin, so consumers do not need separate
 shader file management.
 
+## Demo
+
+<p align="center">
+  <img src="assets/anime4k-compare.png" alt="Anime4K enhancement comparison in CinePlayer" width="720">
+</p>
+
+The comparison above is captured from
+[CinePlayer](https://github.com/cinemore/CinePlayer), which uses Anime4KMetal
+for Anime4K-style anime super-resolution and A/B comparison.
+
 ## Requirements
 
 - macOS 13+ / iOS 16+
