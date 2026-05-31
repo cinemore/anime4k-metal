@@ -27,6 +27,36 @@ for Anime4K-style anime super-resolution and A/B comparison.
 
 ## Installation
 
+### Homebrew CLI
+
+```bash
+brew install cinemore/anime4k-metal/anime4k-metal
+```
+
+The Homebrew package installs the native binary for your Mac's CPU architecture
+plus the bundled Anime4K shader resource bundle:
+
+```bash
+anime4k-metal --input input.png --output output.png --preset modeAFast
+```
+
+### GitHub Release CLI
+
+Download the archive for your Mac from the
+[latest release](https://github.com/cinemore/anime4k-metal/releases/latest):
+
+- `anime4k-metal-macos-arm64.tar.gz` for Apple Silicon Macs.
+- `anime4k-metal-macos-x86_64.tar.gz` for Intel Macs.
+- `anime4k-metal-macos-universal.tar.gz` when one archive must cover both.
+
+```bash
+tar -xzf anime4k-metal-macos-arm64.tar.gz
+./anime4k-metal-macos-arm64/bin/anime4k-metal \
+  --input input.png \
+  --output output.png \
+  --preset modeAFast
+```
+
 ### Swift Package Manager Library
 
 ```swift
