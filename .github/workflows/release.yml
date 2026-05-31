@@ -142,3 +142,43 @@ jobs:
           git add Formula/anime4k-metal.rb
           git commit -m "chore: update Homebrew formula for ${tag}"
           git push origin "HEAD:${default_branch}"
+
+      - name: Update Homebrew tap repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          tag="${{ steps.release.outputs.tag }}"
+          arm64_sha256="$(cut -d ' ' -f 1 "${ARM64_ARCHIVE_NAME}.tar.gz.sha256")"
+          x86_64_sha256="$(cut -d ' ' -f 1 "${X86_64_ARCHIVE_NAME}.tar.gz.sha256")"
+          repo_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}"
+          arm64_asset_url="${repo_url}/releases/download/${tag}/${ARM64_ARCHIVE_NAME}.tar.gz"
+          x86_64_asset_url="${repo_url}/releases/download/${tag}/${X86_64_ARCHIVE_NAME}.tar.gz"
+
+          tap_dir="$(mktemp -d)"
+          git clone "https://x-access-token:${GITHUB_TOKEN}@github.com/cinemore/homebrew-anime4k-metal.git" "$tap_dir"
+          mkdir -p "$tap_dir/Formula"
+          cp Formula/anime4k-metal.rb "$tap_dir/Formula/anime4k-metal.rb"
+
+          ruby - "$tap_dir/Formula/anime4k-metal.rb" "$arm64_asset_url" "$arm64_sha256" "$x86_64_asset_url" "$x86_64_sha256" <<'RUBY'
+          path, arm64_asset_url, arm64_sha256, x86_64_asset_url, x86_64_sha256 = ARGV
+          formula = File.read(path)
+          formula = formula.sub(%r{url "https://github\.com/cinemore/anime4k-metal/releases/download/[^"]+/anime4k-metal-macos-arm64\.tar\.gz"}, %(url "#{arm64_asset_url}"))
+          formula = formula.sub(%r{sha256 "[0-9a-f]{64}"\n  else}, %(sha256 "#{arm64_sha256}"\n  else))
+          formula = formula.sub(%r{url "https://github\.com/cinemore/anime4k-metal/releases/download/[^"]+/anime4k-metal-macos-x86_64\.tar\.gz"}, %(url "#{x86_64_asset_url}"))
+          formula = formula.sub(%r{sha256 "[0-9a-f]{64}"\n  end}, %(sha256 "#{x86_64_sha256}"\n  end))
+          File.write(path, formula)
+          RUBY
+
+          cd "$tap_dir"
+          if git diff --quiet -- Formula/anime4k-metal.rb; then
+            echo "Tap formula already points at $tag"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula/anime4k-metal.rb
+          git commit -m "chore: update anime4k-metal formula for ${tag}"
+          git push origin HEAD:main
