@@ -7,10 +7,10 @@ class Anime4kMetal < Formula
 
   if Hardware::CPU.arm?
     url "https://github.com/cinemore/anime4k-metal/releases/download/v0.1.0/anime4k-metal-macos-arm64.tar.gz"
-    sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+    sha256 "f1167a0f039f2ee12a20bbe5354fbfe1173cd51bb78225f9e438ba9976435209"
   else
     url "https://github.com/cinemore/anime4k-metal/releases/download/v0.1.0/anime4k-metal-macos-x86_64.tar.gz"
-    sha256 "0000000000000000000000000000000000000000000000000000000000000000"
+    sha256 "1d442a5e47f9bff306120f9d7d3985da71dade2227b738c0bd2d3637753dd946"
   end
 
   def install
