@@ -1,6 +1,7 @@
 class Anime4kMetal < Formula
   desc "Native macOS Anime4K image enhancement CLI"
   homepage "https://github.com/cinemore/anime4k-metal"
+  version "0.1.0"
   license "MIT"
 
   depends_on macos: :ventura
