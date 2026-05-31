@@ -13,6 +13,22 @@ This package is intentionally independent from CinePlayer. Library APIs operate 
 
 ## Library Usage
 
+## Swift Package Manager Library
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/cinemore/anime4k-metal.git", branch: "main"),
+],
+targets: [
+    .target(
+        name: "YourTarget",
+        dependencies: [
+            .product(name: "Anime4KMetal", package: "anime4k-metal"),
+        ]
+    ),
+]
+```
+
 ```swift
 import Anime4KMetal
 
