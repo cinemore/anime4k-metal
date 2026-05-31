@@ -30,7 +30,7 @@ for Anime4K-style anime super-resolution and A/B comparison.
 ### Homebrew CLI
 
 ```bash
-brew install cinemore/anime4k-metal/anime4k-metal
+brew install cinemore/tap/anime4k-metal
 ```
 
 The Homebrew package installs the native binary for your Mac's CPU architecture

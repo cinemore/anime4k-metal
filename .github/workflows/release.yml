@@ -162,7 +162,7 @@ jobs:
           x86_64_asset_url="${repo_url}/releases/download/${tag}/${X86_64_ARCHIVE_NAME}.tar.gz"
 
           tap_dir="$(mktemp -d)"
-          git clone "https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/cinemore/homebrew-anime4k-metal.git" "$tap_dir"
+          git clone "https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/cinemore/homebrew-tap.git" "$tap_dir"
           mkdir -p "$tap_dir/Formula"
           cp Formula/anime4k-metal.rb "$tap_dir/Formula/anime4k-metal.rb"
 
