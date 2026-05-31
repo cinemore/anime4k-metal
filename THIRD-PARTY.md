@@ -2,10 +2,19 @@
 
 ## Anime4K
 
-This package includes shader logic derived from Anime4K shader programs.
+This package includes GLSL shader resources derived from Anime4K shader
+programs.
 
 - Upstream project: https://github.com/bloc97/Anime4K
 - Shader family: Anime4K v3/v4 GLSL shader programs
+- Upstream license: MIT
+- Copyright: Copyright (c) 2019-2021 bloc97
 
-Review and preserve the exact upstream license text before publishing a public
-release.
+The original MIT license headers are preserved in the bundled shader files under
+`Sources/Anime4KMetalCore/Resources/glsl`.
+
+## Anime4KMetal
+
+This package also references implementation ideas from Anime4KMetal.
+
+- Reference project: https://github.com/imxieyi/Anime4KMetal
