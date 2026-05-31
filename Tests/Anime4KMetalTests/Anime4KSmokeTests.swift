@@ -19,6 +19,19 @@ final class Anime4KSmokeTests: XCTestCase {
         XCTAssertLessThanOrEqual(CVPixelBufferGetHeight(output), 96)
     }
 
+    func testCGImageAdapterPreservesUsableOutput() throws {
+        guard MTLCreateSystemDefaultDevice() != nil else {
+            throw XCTSkip("Metal unavailable")
+        }
+        let input = try makeSyntheticImage(width: 80, height: 45)
+        let interpolator = try Anime4KInterpolator(
+            configuration: .init(preset: .modeBFast, maxOutputWidth: 160, maxOutputHeight: 90)
+        )
+        let output = try interpolator.enhance(image: input)
+        XCTAssertEqual(output.width, 160)
+        XCTAssertEqual(output.height, 90)
+    }
+
     private func makeSyntheticPixelBuffer(width: Int, height: Int) throws -> CVPixelBuffer {
         let attrs: [String: Any] = [
             kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA),
@@ -56,5 +69,38 @@ final class Anime4KSmokeTests: XCTestCase {
             }
         }
         return buffer
+    }
+
+    private func makeSyntheticImage(width: Int, height: Int) throws -> CGImage {
+        let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
+        let bytesPerPixel = 4
+        let bytesPerRow = width * bytesPerPixel
+        var data = [UInt8](repeating: 0, count: height * bytesPerRow)
+        for y in 0..<height {
+            for x in 0..<width {
+                let offset = y * bytesPerRow + x * bytesPerPixel
+                data[offset + 0] = UInt8((x * 255) / max(1, width - 1))
+                data[offset + 1] = UInt8((y * 255) / max(1, height - 1))
+                data[offset + 2] = 128
+                data[offset + 3] = 255
+            }
+        }
+        let provider = CGDataProvider(data: Data(data) as CFData)!
+        guard let image = CGImage(
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bitsPerPixel: 32,
+            bytesPerRow: bytesPerRow,
+            space: colorSpace,
+            bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.last.rawValue),
+            provider: provider,
+            decode: nil,
+            shouldInterpolate: false,
+            intent: .defaultIntent
+        ) else {
+            throw Anime4KError.processingFailed("failed to create synthetic image")
+        }
+        return image
     }
 }
