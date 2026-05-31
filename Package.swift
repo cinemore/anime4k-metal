@@ -23,10 +23,10 @@ let package = Package(
             name: "Anime4KMetalCore",
             exclude: ["Shaders"],
             resources: [.copy("Resources/glsl")],
-            plugins: [.plugin(name: "CompileMetalShaders")]
+            plugins: [.plugin(name: "CompileAnime4KMetalShaders")]
         ),
         .plugin(
-            name: "CompileMetalShaders",
+            name: "CompileAnime4KMetalShaders",
             capability: .buildTool()
         ),
         .executableTarget(

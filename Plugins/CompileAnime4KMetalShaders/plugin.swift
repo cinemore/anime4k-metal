@@ -2,7 +2,7 @@ import PackagePlugin
 import Foundation
 
 @main
-struct CompileMetalShaders: BuildToolPlugin {
+struct CompileAnime4KMetalShaders: BuildToolPlugin {
     func createBuildCommands(context: PluginContext, target: Target) async throws -> [Command] {
         guard let target = target as? SourceModuleTarget else { return [] }
 
