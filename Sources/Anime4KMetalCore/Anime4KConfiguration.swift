@@ -1,5 +1,5 @@
 import Foundation
-import Metal
+@preconcurrency import Metal
 
 public struct Anime4KConfiguration: Sendable {
     public var preset: Anime4KPreset

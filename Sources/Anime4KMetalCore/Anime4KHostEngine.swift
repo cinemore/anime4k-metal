@@ -1,6 +1,6 @@
 import CoreVideo
 import Foundation
-import Metal
+@preconcurrency import Metal
 import QuartzCore
 import VideoToolbox
 
@@ -22,7 +22,7 @@ public struct Anime4KHostEngineDebugSnapshot: Sendable {
 }
 
 /// 用于在 @Sendable 闭包中延长 CVPixelBuffer 生命周期的持有者（仅保留引用，不在闭包内访问 buffer）。
-nonisolated private final class PixelBufferLifetimeHolder: @unchecked Sendable {
+private final class PixelBufferLifetimeHolder: @unchecked Sendable {
     let buffer: CVPixelBuffer
     init(_ buffer: CVPixelBuffer) {
         self.buffer = buffer
@@ -30,7 +30,7 @@ nonisolated private final class PixelBufferLifetimeHolder: @unchecked Sendable {
 }
 
 /// 用于在 @Sendable 闭包中向 intermediate pool 回传 texture，避免直接捕获 non-Sendable MTLTexture。
-nonisolated private final class TextureReturnHolder: @unchecked Sendable {
+private final class TextureReturnHolder: @unchecked Sendable {
     let texture: MTLTexture
     let width: Int
     let height: Int
@@ -1343,9 +1343,7 @@ public final class Anime4KHostEngine: @unchecked Sendable {
         if let texture, let commandBuffer {
             let holder = TextureReturnHolder(texture: texture, width: width, height: height)
             commandBuffer.addCompletedHandler { [weak self, holder] _ in
-                Task { @MainActor in
-                    self?.returnToIntermediatePool(texture: holder.texture, width: holder.width, height: holder.height)
-                }
+                self?.returnToIntermediatePool(texture: holder.texture, width: holder.width, height: holder.height)
             }
         }
         return texture
@@ -1483,11 +1481,11 @@ public final class Anime4KHostEngine: @unchecked Sendable {
     }
 }
 
-nonisolated private struct YUVConversionParams {
+private struct YUVConversionParams {
     var isVideoRange: UInt32
 }
 
-nonisolated private final class Anime4KProcessor {
+private final class Anime4KProcessor {
     let name: String
     let shaders: [MPVShader]
     let libraries: [MTLLibrary]
@@ -1787,7 +1785,7 @@ nonisolated private final class Anime4KProcessor {
     }
 }
 
-nonisolated private enum Anime4KEncoderError: Error, LocalizedError {
+private enum Anime4KEncoderError: Error, LocalizedError {
     case encoderCreationFail(String)
     case encoderFail(String)
 
@@ -1801,7 +1799,7 @@ nonisolated private enum Anime4KEncoderError: Error, LocalizedError {
     }
 }
 
-nonisolated private struct MPVShader {
+private struct MPVShader {
     var name: String
     var hook: String?
     var binds: [String]
