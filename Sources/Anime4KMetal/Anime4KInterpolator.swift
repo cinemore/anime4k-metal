@@ -13,6 +13,14 @@ public final class Anime4KInterpolator: @unchecked Sendable {
         engine = try Anime4KHostEngine(preferredDevice: configuration.preferredDevice)
     }
 
+    public init(
+        configuration: Anime4KConfiguration = .init(),
+        engine: Anime4KHostEngine
+    ) {
+        self.configuration = configuration
+        self.engine = engine
+    }
+
     public func reset() {
         queue.sync {
             generation += 1
