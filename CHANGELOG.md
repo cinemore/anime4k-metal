@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.4
+
+- Move the release workflow from the retiring `macos-14` runner to the supported `macos-15` runner.
+- Preserve arm64, Intel x86_64, and universal CLI archives with their bundled Metal resources.
+- Library and CLI behavior are unchanged.
+
 ## 0.1.3
 
 - Reuse intermediate textures and shared workspaces while preserving delivered output buffers.

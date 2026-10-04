@@ -56,7 +56,7 @@ tar -xzf anime4k-metal-macos-arm64.tar.gz
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/cinemore/anime4k-metal.git", exact: "0.1.3"),
+    .package(url: "https://github.com/cinemore/anime4k-metal.git", exact: "0.1.4"),
 ],
 targets: [
     .target(
