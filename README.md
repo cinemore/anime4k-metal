@@ -2,10 +2,11 @@
 
 [English](./README.md) | [简体中文](./README-zh.md)
 
-Native Apple Metal Anime4K image enhancement - Swift Package + CLI.
+Native Apple Metal Anime4K image enhancement — Swift Package and macOS CLI.
 
-This package is intentionally independent from CinePlayer. Library APIs operate on
-`CVPixelBuffer` and `CGImage`; player callback adapters belong in consuming apps.
+Use the Swift API to enhance `CVPixelBuffer` video frames and `CGImage` images in
+image tools, video players and processing pipelines. The macOS CLI processes
+images directly from a terminal or batch scripts.
 
 The package ships Anime4K GLSL shader resources inline and compiles the Metal
 host kernels through a SwiftPM build plugin, so consumers do not need separate

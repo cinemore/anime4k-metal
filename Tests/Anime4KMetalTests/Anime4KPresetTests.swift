@@ -17,7 +17,7 @@ final class Anime4KPresetTests: XCTestCase {
         XCTAssertEqual(Anime4KPreset.modeCAHQ.rawValue, "modeCAHQ")
     }
 
-    func testDisplayNamesMatchCinePlayerUI() {
+    func testDisplayNamesAreStable() {
         XCTAssertEqual(Anime4KPreset.modeAFast.displayName, "Mode A (Fast)")
         XCTAssertEqual(Anime4KPreset.modeBFast.displayName, "Mode B (Fast)")
         XCTAssertEqual(Anime4KPreset.modeCFast.displayName, "Mode C (Fast)")

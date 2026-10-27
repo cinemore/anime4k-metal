@@ -2,9 +2,9 @@
 
 [English](./README.md) | [简体中文](./README-zh.md)
 
-原生 Apple Metal Anime4K 图像增强库与命令行工具，提供 Swift Package 和 CLI。
+Apple Metal 原生 Anime4K 图像增强，提供 Swift Package 和 macOS 命令行工具。
 
-该包刻意独立于 CinePlayer。库 API 处理 `CVPixelBuffer` 和 `CGImage`；播放器回调适配层应放在消费它的应用中。
+Swift API 可处理 `CVPixelBuffer` 视频帧和 `CGImage` 图像，适用于图像工具、视频播放器和处理流水线；命令行工具可直接处理图片，也可在脚本中批量调用。
 
 包内置 Anime4K GLSL shader 资源，并通过 SwiftPM build plugin 编译 Metal host kernels，因此调用方不需要单独管理 shader 文件。
 
