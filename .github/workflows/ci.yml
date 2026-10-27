@@ -1,0 +1,23 @@
+name: CI
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v6.0.2
+      - name: Run package tests
+        run: swift test
+      - name: Build release CLI
+        run: swift build -c release --product anime4k-metal
+      - name: Verify CLI image enhancement
+        run: >-
+          .build/release/anime4k-metal
+          --input Tests/fixtures/input.png
+          --output "$RUNNER_TEMP/anime4k-output.png"
+          --preset modeAFast
+          --max-width 128
+          --max-height 96
+      - name: Verify iOS library build
+        run: xcodebuild -scheme Anime4KMetal -destination 'generic/platform=iOS' -skipPackagePluginValidation CODE_SIGNING_ALLOWED=NO build
